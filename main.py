@@ -1,5 +1,5 @@
 from data_pipeline import DataPipeline
-from analyze_pipeline import AnalyzePipeline
+from analysis_pipeline import AnalysisPipeline
 from ml_pipeline import ML_Pipeline
 
 from sklearn.tree import DecisionTreeClassifier
@@ -11,14 +11,32 @@ from sklearn.svm import SVC
 import os 
 import random
 
+# Used in other classes
+
+# import pandas as pd
+
+# from sklearn.decomposition import PCA
+# from sklearn.manifold import TSNE
+# from sklearn.metrics import accuracy_score, roc_auc_score
+# from sklearn.model_selection import train_test_split
+# from sklearn.preprocessing import OneHotEncoder
+# from sklearn.preprocessing import label_binarize
+
+# import numpy as np
+
+# import plotly.graph_objects as go
+
+
 #setosa(0) versicolor(1) virginica(2) 
 
 def main():
     # DATA PARAMETERS
+    test_size = 0.3
+    random_state = 42
     directoryPath = "C:/VSCode/Titanic-ML-Pipeline/datasets/"
     csvList = [f for f in os.listdir(directoryPath) if f.endswith('.csv')]
     #randomCSV = random.choice(csvList)
-    randomCSV = "Life Expectancy Data(in).csv"
+    randomCSV = "titanic(in).csv"
     
     # ML PARAMETERS
     dt_max_depth = 2                # Decision tree
@@ -34,11 +52,11 @@ def main():
     
     # cleans and splits data
     targetPath = os.path.join(directoryPath, randomCSV)
-    data_pipeline = DataPipeline(targetPath)
+    data_pipeline = DataPipeline(targetPath, test_size, random_state)
     X_train, X_test, y_train, y_test, cleanedDF, targetY = data_pipeline.run()    
     
     # analyze data and save graphs/visualizations
-    analyze_pipeline = AnalyzePipeline(X_train, X_test, y_train, y_test, cleanedDF, targetY)
+    analyze_pipeline = AnalysisPipeline(X_train, X_test, y_train, y_test, cleanedDF, targetY)
     analyze_pipeline.run()
     
     # test and evaluate with ML models

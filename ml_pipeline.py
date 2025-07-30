@@ -64,7 +64,7 @@ class ML_Pipeline:
             print("No results to display. Run training first.")
             return
 
-        df = self.results_df
+        df = self.results_df.round(4)
 
         fig = go.Figure(
             data=[

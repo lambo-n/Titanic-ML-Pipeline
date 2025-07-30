@@ -9,8 +9,11 @@ from sklearn.preprocessing import OneHotEncoder
 # 4. Handle missing values
 
 class DataPipeline:
-    def __init__(self, csv):
+    def __init__(self, csv, test_size, random_state):
         self.csv = csv
+        self.test_size = test_size
+        self.random_state = random_state
+        
         self.targetY = None
         self.unprocessedDF = None
         self.cleanedDF = None
@@ -132,9 +135,8 @@ class DataPipeline:
 
         # train test split with 80% training and 20% testing
         self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(
-            x, y, test_size=0.2, random_state=42
+            x, y, test_size=self.test_size, random_state=self.random_state
         )
-        
 
         print("\nSplit:")
         print(f"X_train shape: {self.X_train.shape} (rows, columns)")

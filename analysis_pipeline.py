@@ -1,9 +1,7 @@
 import plotly.express as px
 import os
 
-
-
-class AnalyzePipeline:
+class AnalysisPipeline:
     def __init__(self, X_train, X_test, y_train, y_test, cleanedDF, targetY):
         self.X_train = X_train
         self.X_test = X_test
@@ -128,8 +126,6 @@ class AnalyzePipeline:
         fig.write_html(file_path)
         print(f"Saved: {file_path}")
         
-    
-
     def run(self):
         self.violin_plot()
         self.histogram()
